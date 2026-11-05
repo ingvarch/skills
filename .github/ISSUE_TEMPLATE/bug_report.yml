@@ -9,8 +9,12 @@ body:
       options:
         - git-commit
         - git-pr
+        - git-whats-new
         - repo-tidy
         - repo-settings
+        - code-quality
+        - session-review
+        - session-handoff
     validations:
       required: true
   - type: textarea
