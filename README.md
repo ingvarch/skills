@@ -1,54 +1,59 @@
 # skills
 
-Ingvar's agent skills for Claude Code, packaged as one plugin. The repository is a marketplace:
-add it once and every skill installs together. In Claude Code a skill runs as
-`/ingvarch:<name>`.
+[![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-d97757?logo=claude&logoColor=white)](https://code.claude.com/docs/en/plugins)
+[![Python](https://img.shields.io/badge/Python-3776ab?logo=python&logoColor=white)](skills/repo-tidy/scripts)
+[![License](https://img.shields.io/github/license/ingvarch/skills)](LICENSE)
 
-## Skills
+Agent skills for Claude Code, packaged as one plugin, for a maintainer who wants every GitHub
+repository in one shape: conventional commits and pull requests, docs in `docs/` behind a short
+README, the same GitHub settings, and the plan in milestones. One install brings every skill, and
+each runs as `/ingvarch:<name>`. Made by Igor Churmeev ([ingvarch](https://github.com/ingvarch)).
 
-Git:
+## Features
 
-- [git-commit](skills/git-commit/SKILL.md): prints a one-line conventional commit command for the
-  current changes. Runs only when you type it.
-- [git-pr](skills/git-pr/SKILL.md): prepares a pull request: a conventional title, a body from the
-  repository's template, labels and a merge method, printed as commands.
+- **git-commit**: prints a one-line conventional commit command for the current changes. Runs only
+  when you type it.
+- **git-pr**: prepares a pull request: a conventional title, a body from the repository's template,
+  labels and a merge method, printed as commands.
+- **repo-tidy**: docs in `docs/` under kebab-case names, the README as a short entry page,
+  `AGENTS.md` as the agent file, and GitHub milestones with issues for the plan.
+- **repo-settings**: the About, merge methods and auto-merge, a ruleset on the default branch,
+  labels, Dependabot, unused tabs off, and the community standards of a public repository.
+- One marketplace: a single install brings every skill, and an update brings every change.
 
-Repository:
-
-- [repo-tidy](skills/repo-tidy/SKILL.md): docs in `docs/` under kebab-case names, the README as a
-  short entry page, `AGENTS.md` as the agent file, and GitHub milestones with issues for the plan.
-- [repo-settings](skills/repo-settings/SKILL.md): the About, merge methods and auto-merge, a ruleset
-  on the default branch, labels, Dependabot, unused tabs off, and the community standards of a
-  public repository.
-
-## Installation
-
-```
-/plugin install ingvarch --marketplace ingvarch/skills
-```
-
-Or in two steps:
+## Usage
 
 ```
-/plugin marketplace add ingvarch/skills
-/plugin install ingvarch@ingvarch-skills
+claude plugin install ingvarch --marketplace ingvarch/skills
 ```
 
-## Adding a skill
-
-1. Put it in `skills/<name>/SKILL.md`, with its files beside it. The name starts with the area it
-   works on: `git-`, `repo-`.
-2. Write it in the shape of the others: one paragraph on what it does and who runs the commands,
-   then numbered steps, each ending on a check that tells the step is done; `NEVER` last, for hard
-   limits only. A skill that runs only when typed sets `disable-model-invocation: true`.
-3. List it under Skills above.
-4. Bump `version` in `.claude-plugin/plugin.json`: `/plugin update` installs a new version only.
-5. Run `claude plugin validate .` and the tests.
-
-Local run without installing: `claude --plugin-dir .`
-
-## Tests
+Then, in Claude Code inside a repository:
 
 ```
+/ingvarch:repo-tidy
+```
+
+## Quick start
+
+You need Claude Code and Python 3.9 or newer, see [docs/development.md](docs/development.md).
+
+```
+git clone https://github.com/ingvarch/skills.git
+cd skills
+claude plugin validate .
 python3 -m unittest discover -s skills/repo-tidy/scripts
+claude --plugin-dir . plugin details ingvarch
 ```
+
+## Documentation
+
+- [Development](docs/development.md): prerequisites, running from a checkout, checks, project
+  structure, adding a skill, the skill shape and releases.
+
+## License
+
+[MIT](LICENSE).
+
+## Contributing
+
+Bug reports, ideas and pull requests are welcome, see [CONTRIBUTING.md](CONTRIBUTING.md).

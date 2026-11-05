@@ -1,0 +1,43 @@
+name: Bug report
+description: A skill does not do what its SKILL.md says
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Skill
+      options:
+        - git-commit
+        - git-pr
+        - repo-tidy
+        - repo-settings
+    validations:
+      required: true
+  - type: textarea
+    id: request
+    attributes:
+      label: What you typed
+      description: The command or message you gave the agent, for example `/ingvarch:git-pr`.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: What the agent did, and the commands it printed or ran. Remove tokens and secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What should have happened, with the step of the SKILL.md that describes it.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Versions
+      description: "`claude --version` and the plugin version from `claude plugin list`."
+    validations:
+      required: true
