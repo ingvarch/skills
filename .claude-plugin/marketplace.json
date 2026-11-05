@@ -1,0 +1,14 @@
+{
+  "name": "ingvarch-skills",
+  "description": "ingvarch's agent skills for Claude Code",
+  "owner": {
+    "name": "ingvarch"
+  },
+  "plugins": [
+    {
+      "name": "ingvarch",
+      "source": "./",
+      "description": "Ingvar's agent skills: conventional commits and pull requests, tidy repository docs and plan, and GitHub settings in one shape."
+    }
+  ]
+}

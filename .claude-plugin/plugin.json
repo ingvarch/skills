@@ -1,0 +1,17 @@
+{
+  "name": "ingvarch",
+  "version": "0.1.0",
+  "description": "Ingvar's agent skills: conventional commits and pull requests, tidy repository docs and plan, and GitHub settings in one shape.",
+  "author": {
+    "name": "ingvarch"
+  },
+  "repository": "https://github.com/ingvarch/skills",
+  "keywords": [
+    "skills",
+    "git",
+    "pull-request",
+    "github",
+    "docs",
+    "repository"
+  ]
+}

@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: <ecosystem>
+    directory: /
+    schedule:
+      interval: cron
+      cronjob: '0 6 * * *'
+    labels: [dependencies, <build area>]
+    commit-message:
+      prefix: chore(<build scope>)
+    groups:
+      <ecosystem>-minor-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: cron
+      cronjob: '0 6 * * *'
+    labels: [dependencies, <ci area>]
+    commit-message:
+      prefix: chore(<ci scope>)
+    groups:
+      actions-minor-patch:
+        update-types: [minor, patch]
