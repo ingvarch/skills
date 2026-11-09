@@ -95,21 +95,31 @@ def anchors_of(text: str) -> set[str]:
     return anchors
 
 
+def relative_links(text: str) -> list[str]:
+    """Targets of Markdown links outside code, apart from URLs and other schemes."""
+    prose = CODE.sub("", text)
+    targets = [t.strip("<>") for t in INLINE.findall(prose) + DEFINITION.findall(prose)]
+    return [t for t in targets if not SCHEME.match(t)]
+
+
+def resolve(path: str, target: str) -> tuple[str, str]:
+    """The repository path and the fragment that a link in the file at path points to."""
+    file, _, fragment = target.partition("#")
+    file = unquote(file)
+    if not file:
+        return path, fragment
+    base = "" if file.startswith("/") else os.path.dirname(path)
+    return os.path.normpath(os.path.join(base, file.lstrip("/"))), fragment
+
+
 def broken_links(files: dict[str, str], exists) -> list[tuple[str, str]]:
     """Relative Markdown links whose file or #fragment does not exist, as (file, target)."""
     anchors = {path: anchors_of(text) for path, text in files.items()}
     broken = []
     for path, text in files.items():
-        prose = CODE.sub("", text)
-        for target in INLINE.findall(prose) + DEFINITION.findall(prose):
-            target = target.strip("<>")
-            if SCHEME.match(target):
-                continue
-            file, _, fragment = target.partition("#")
-            file = unquote(file)
-            base = "" if file.startswith("/") else os.path.dirname(path)
-            resolved = os.path.normpath(os.path.join(base, file.lstrip("/"))) if file else path
-            if file and not exists(resolved):
+        for target in relative_links(text):
+            resolved, fragment = resolve(path, target)
+            if target.partition("#")[0] and not exists(resolved):
                 broken.append((path, target))
             elif fragment and resolved in anchors and unquote(fragment).lower() not in anchors[resolved]:
                 broken.append((path, target))
