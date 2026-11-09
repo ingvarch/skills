@@ -8,7 +8,7 @@
     {
       "name": "ingvarch",
       "source": "./",
-      "description": "Ingvar's agent skills: conventional commits, pull requests and release notes, tidy repository docs and plan, GitHub settings in one shape, code-quality audits, and review and handoff of a session's work."
+      "description": "Ingvar's agent skills: conventional commits, pull requests and release notes, tidy repository docs, agent files and plan, GitHub settings in one shape, code-quality audits, and review and handoff of a session's work."
     }
   ]
 }

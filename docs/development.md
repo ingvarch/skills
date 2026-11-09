@@ -23,13 +23,17 @@ Claude Code starts with the plugin from the working tree. The skills run as `/in
 ```
 claude plugin validate .
 python3 -m unittest discover -s skills/repo-tidy/scripts
+python3 -m unittest discover -s skills/repo-agents/scripts
 python3 -m unittest discover -s skills/code-quality/scripts
 python3 -I skills/repo-tidy/scripts/check_docs.py
+python3 -I skills/repo-agents/scripts/check_agents.py
 claude --plugin-dir . plugin details ingvarch
 ```
 
 The first prints `Validation passed`, the tests end with `OK`, `check_docs.py` finds 0 names and 0
-links, and `details` lists every skill in `skills/`.
+links, `check_agents.py` finds 0 agent files, 0 docs and 0 links, and `details` lists every skill in
+`skills/`. `check_agents.py` imports `check_docs.py` from `skills/repo-tidy/scripts/`: after a change
+there, run both test suites.
 
 ## Project structure
 

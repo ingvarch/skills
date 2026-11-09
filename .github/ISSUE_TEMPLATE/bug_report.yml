@@ -11,6 +11,7 @@ body:
         - git-pr
         - git-whats-new
         - repo-tidy
+        - repo-agents
         - repo-settings
         - code-quality
         - session-review
