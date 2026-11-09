@@ -6,9 +6,10 @@
 
 Agent skills for Claude Code, packaged as one plugin, for a maintainer who wants every GitHub
 repository in one shape: conventional commits and pull requests, docs in `docs/` behind a short
-README, the same GitHub settings, and the plan in milestones. Other skills audit the code, review
-or hand over the work of a session, and write store release notes. One install brings every skill,
-and each runs as `/ingvarch:<name>`. Made by Igor Churmeev ([ingvarch](https://github.com/ingvarch)).
+README and an `AGENTS.md` that points agents to them, the same GitHub settings, and the plan in
+milestones. Other skills audit the code, review or hand over the work of a session, and write store
+release notes. One install brings every skill, and each runs as `/ingvarch:<name>`. Made by Igor
+Churmeev ([ingvarch](https://github.com/ingvarch)).
 
 ## Features
 
@@ -18,8 +19,10 @@ and each runs as `/ingvarch:<name>`. Made by Igor Churmeev ([ingvarch](https://g
   labels and a merge method, printed as commands.
 - **git-whats-new**: "What's New" notes for the App Store, Google Play or a changelog from the
   commits of a branch, as 3 to 6 English bullets ready to paste.
-- **repo-tidy**: docs in `docs/` under kebab-case names, the README as a short entry page,
-  `AGENTS.md` as the agent file, and GitHub milestones with issues for the plan.
+- **repo-tidy**: docs in `docs/` under kebab-case names, the README as a short entry page, the
+  agent file through repo-agents, and GitHub milestones with issues for the plan.
+- **repo-agents**: `AGENTS.md` with a `CLAUDE.md` that imports it, a line for every doc that says
+  when to read it, and only the commands and rules an agent cannot find by looking.
 - **repo-settings**: the About, merge methods and auto-merge, a ruleset on the default branch,
   labels, Dependabot, unused tabs off, and the community standards of a public repository.
 - **code-quality**: a DRY, KISS, YAGNI and SOLID audit by parallel agents with a refuting verifier,
@@ -52,6 +55,7 @@ git clone https://github.com/ingvarch/skills.git
 cd skills
 claude plugin validate .
 python3 -m unittest discover -s skills/repo-tidy/scripts
+python3 -m unittest discover -s skills/repo-agents/scripts
 python3 -m unittest discover -s skills/code-quality/scripts
 claude --plugin-dir . plugin details ingvarch
 ```

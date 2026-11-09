@@ -1,13 +1,13 @@
 ---
 name: repo-tidy
-description: Tidy a repository's docs, settings and plan - every doc in docs/ under lower-case kebab-case names, the README as a short entry page with badges and a documentation index, AGENTS.md as the agent file, the GitHub settings through repo-settings, and GitHub milestones with issues for the work done and left. Use when the user asks to reorganize or clean up docs, restyle the README, or set up milestones and issues.
+description: Tidy a repository's docs, settings and plan - every doc in docs/ under lower-case kebab-case names, the README as a short entry page with badges and a documentation index, the agent file through repo-agents, the GitHub settings through repo-settings, and GitHub milestones with issues for the work done and left. Use when the user asks to reorganize or clean up docs, restyle the README, or set up milestones and issues.
 ---
 
 # repo-tidy
 
 Bring a repository to one shape: the README is an **entry page**, every other doc lives in `docs/`
-under a lower-case kebab-case name, agent instructions live in `AGENTS.md`, the GitHub settings
-follow the repo-settings skill, and the plan lives in GitHub milestones.
+under a lower-case kebab-case name, the agent file follows the repo-agents skill, the GitHub
+settings follow the repo-settings skill, and the plan lives in GitHub milestones.
 
 `<skill>` below is this skill's folder, the base directory shown when it loads. Run its scripts from
 the repository root with `python3 -I`.
@@ -49,12 +49,6 @@ commands otherwise.
   `git mv ADR adr-tmp && git mv adr-tmp adr`.
 - Update every reference: grep the whole repository for each old name, code comments and the old
   README's links included. Links inside `docs/` are relative to `docs/`: `spec.md`, `../README.md`.
-- Agent file: each `CLAUDE.md` (the root and any subfolder) becomes `AGENTS.md`, and a new
-  `CLAUDE.md` beside it holds the single line `@AGENTS.md`. Claude Code imports the file through
-  that line in every version and on every platform; other agents read `AGENTS.md` directly. Run
-  `git mv CLAUDE.md AGENTS.md`, then write the new `CLAUDE.md`. When an `AGENTS.md` exists already,
-  merge the rules of `CLAUDE.md` into it instead. References to `CLAUDE.md` now point to
-  `AGENTS.md`.
 - Done when grep finds no old name, apart from tool boilerplate that names a file generically.
 - Commit the renames with their references.
 
@@ -118,26 +112,31 @@ Badges, each one true for this repository:
   `gh repo view --json licenseInfo` names one. Both need a public repository: shields.io cannot read
   private ones.
 
-Point `AGENTS.md` at the docs: one line per doc and when to read it.
+Commit the guides and the entry page, so the next step starts from a clean tree.
 
-## 6. Repository settings
+## 6. Agent file
+
+Run the repo-agents skill now that the docs have their final paths. Its files go on this branch.
+Done when repo-agents has shown its report.
+
+## 7. Repository settings
 
 Run the repo-settings skill. Its files go on this branch.
 
-## 7. Verify
+## 8. Verify
 
 - `check_docs.py` reports 0 links, and no names apart from the tool-required ones in the step 1
   table.
 - The project's own checks pass: code comments changed too.
-- Commit the guides, the entry page and the agent file.
+- Commit the fixes the checks needed.
 
-## 8. Milestones and issues
+## 9. Milestones and issues
 
 Offer to put the plan into GitHub: milestones, the done work as closed issues linked to the PRs that
 delivered it, and the open work as issues. On a yes, follow [milestones.md](milestones.md) before
 the PR, so the PR can close its own issue.
 
-## 9. Pull request
+## 10. Pull request
 
-Prepare it with the git-pr skill. With step 8 done, the body says `Closes #<docs issue>` and the
+Prepare it with the git-pr skill. With step 9 done, the body says `Closes #<docs issue>` and the
 `gh pr create` command carries `--milestone`.
